@@ -82,6 +82,7 @@ public:
             //now check the right part
             current = current -> right;
         }
+        cout<<endl;
     }
 
     void displayPreorder(){
@@ -102,6 +103,7 @@ public:
                 s.push(current -> left);
             }
         }
+        cout<<endl;
     }
 
     void displayPostorder(){
@@ -133,6 +135,7 @@ public:
             cout<<current -> data<<" ";
             s2.pop();
         }
+        cout<<endl;
     }
 
     int height(Node* node){
@@ -204,9 +207,42 @@ public:
     }
 
     BT operator=(BT &tree){
-        
+        BT b;
+        Queue <Node *> q;
+        q.push(tree.root);
+        Node *current = nullptr;
+
+        while(!q.isEmpty()){
+            current = q.getfront();
+            b.insert(current -> data);
+            q.pop();
+
+            if(current -> left != nullptr){
+                q.push(current -> left);
+            }
+            if(current -> right != nullptr){
+                q.push(current -> right);
+            }
+        }
+
+        return b;
     }
 
     
 
 };
+
+int main(){
+    BT b1;
+    b1.insert(25);
+    b1.insert(23);
+    b1.insert(12);
+    b1.insert(56);
+    b1.insert(88);
+
+    b1.displayPreorder();
+    BT b2 = b1;
+    b2.displayPreorder();
+
+    return 0;
+}
