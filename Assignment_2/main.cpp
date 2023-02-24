@@ -135,15 +135,6 @@ public:
         }
     }
 
-    void displayPostorder(Node *node){
-        if(node == nullptr){
-            return;
-        }
-        
-        displayPostorder(node -> left);
-        displayPostorder(node -> right);
-        cout<<node -> data<<" ";
-    }
     int height(Node* node){
         if(root == nullptr){
             return -1;
@@ -161,21 +152,61 @@ public:
         return count;
     }
 
+    void swapNodes(Node *node){
+        Node *current = node;
+        Node *temp;
+
+        if(current!=nullptr){
+            if(current -> left || current -> right){
+            temp = current -> left;
+            current -> left = current -> right;
+            current -> right = temp;
+            }
+
+            swapNodes(current -> left);
+            swapNodes(current -> right);
+        }
+
+        else{
+            return;
+        }        
+    }
+
+    void nodesCount(){
+        Stack <Node *> s;
+        s.push(this -> root);
+        Node *current = nullptr;
+        int leafnode = 0;
+        int internalnode = 0;
+
+        while(!s.isEmpty()){
+            current = s.gettop();            
+            s.pop();
+
+            if(current -> left == nullptr && current -> right == nullptr){
+                leafnode++;
+            }
+            else{
+                internalnode++;
+            }
+
+             
+            if(current -> right != nullptr){
+                s.push(current -> right);
+            }
+            if(current -> left != nullptr){
+                s.push(current -> left);
+            }
+        }
+
+        cout<<"No of leafnodes: "<<leafnode<<endl;
+        cout<<"No of internal nodes: "<<internalnode<<endl;
+    }
+
+    BT operator=(BT &tree){
+        
+    }
+
+    
+
 };
-
-int main(){
-    BT b;
-    b.insert(45);
-    b.insert(37);
-    b.insert(67);
-    b.insert(89);
-    b.insert(56);
-    b.insert(12);
-
-    Node *root = b.getroot();
-    b.displayPostorder(root);
-    cout<<endl;
-    b.displayPostorder();
-
-    return 0;
-}
