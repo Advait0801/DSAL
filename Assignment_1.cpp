@@ -35,18 +35,6 @@ public:
         this -> root = new Node(r);
     }
 
-    ~BST(){
-        destroy(this -> root);
-    }
-
-    void destroy(Node *node){
-        if(node != nullptr){
-            destroy(node -> left);
-            destroy(node -> right);
-            delete node;
-        }
-    }
-
     Node *getroot(){
         return this -> root;
     }
