@@ -1,3 +1,19 @@
+/*
+Beginning with an empty binary tree, Construct binary tree by inserting the 
+values in the order given. After constructing a binary tree perform following 
+operations on it-
+ Perform inorder, preorder and post order traversal
+ Change a tree so that the roles of the left and right pointers are swapped at 
+every node 
+ Find the height of tree
+ Copy this tree to another [operator=] 
+ Count number of leaves, number of internal nodes. 
+ Erase all nodes in a binary tree. 
+
+Name : Advait Naik
+Roll No : 21354
+*/
+
 #include <iostream>
 #include "Queue.cpp"
 #include "Stack.cpp"
@@ -24,6 +40,10 @@ class BT{
 public:
     BT(){
         this -> root = nullptr;
+    }
+
+    ~BT(){
+        this -> deletenodes();
     }
 
     Node *getroot(){
@@ -228,21 +248,28 @@ public:
         return b;
     }
 
-    
+    void deletenodes(){
+        Stack <Node *> s1,s2;
+        s1.push(this -> root);
+        Node *current = nullptr;
 
+        while(!s1.isEmpty()){
+            current = s1.gettop();
+            s2.push(current);
+            s1.pop();
+
+            if(current -> left != nullptr){
+                s1.push(current -> left);
+            }
+            if(current -> right != nullptr){
+                s1.push(current -> right);
+            }
+        }
+
+        while(!s2.isEmpty()){
+            delete s2.gettop();
+            s2.pop();            
+        }
+    }
 };
 
-int main(){
-    BT b1;
-    b1.insert(25);
-    b1.insert(23);
-    b1.insert(12);
-    b1.insert(56);
-    b1.insert(88);
-
-    b1.displayPreorder();
-    BT b2 = b1;
-    b2.displayPreorder();
-
-    return 0;
-}
