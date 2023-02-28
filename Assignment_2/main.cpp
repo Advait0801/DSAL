@@ -273,3 +273,59 @@ public:
     }
 };
 
+int main(){
+    BT b;
+    cout<<"Enter no of elements to insert in binary tree: ";
+    int n , value;
+    cin>>n;
+    for(int i=0;i<n;i++){
+        cout<<"Enter element: ";
+        cin>>value;
+        b.insert(value);
+    }
+
+    while(true){
+        int choice;
+        cout<<"Press 1 for displaying the binary tree, 2 for getting the height of the tree, 3 for mirroring the tree and displaying it, 4 for copying the tree into another tree and displaying it and 5 for counting the leaf and internal nodes of the tree...."<<endl;
+        cin>>choice;
+
+        if(choice == 1){
+            cout<<"Here's the inorder display of the binary tree..."<<endl;
+            b.displayInorder();
+            cout<<"Here's the preorder display of the binary tree..."<<endl;
+            b.displayPreorder();
+            cout<<"Here's the postorder display of the binary tree..."<<endl;
+            b.displayPostorder();
+        }
+        else if(choice == 2){
+            Node *root = b.getroot();
+            int h = b.height(root);
+            cout<<"Height of the binary tree is "<<h<<endl;
+        }
+        else if(choice == 3){
+            Node *root = b.getroot();
+            b.swapNodes(root);
+            cout<<"Here's the preorder display of the mirrored binary tree..."<<endl;
+            b.displayPreorder();
+        }
+        else if(choice == 4){
+            BT tree = b;
+            cout<<"Here's the preorder traversal of the copied tree..."<<endl;
+            tree.displayPreorder();
+        }
+        else if(choice == 5){
+            b.nodesCount();
+        }
+        else{
+            cout<<"Invalid option...."<<endl;
+        }
+
+        char c;
+        cout<<"IF you to continue press y else press n to exit..";
+        cin>>c;
+
+        if(c == 'n'){
+            break;
+        }
+    }
+}
