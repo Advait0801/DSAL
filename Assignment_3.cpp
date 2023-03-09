@@ -16,6 +16,7 @@ class Node{
     bool rightThread;
 
 public:
+    //parameterized constructor
     Node(int i){
         this -> data = i;
         this -> left = nullptr;
@@ -30,10 +31,12 @@ class TBST{
     Node *root;
 
 public:
+    //parameterized constructor
     TBST(int i){
         this -> root = new Node(i);
     }
-
+    
+    //inserts a node as per insertion in BST
     void insert(int i){
         Node *current = root;
         Node *previous = nullptr;
@@ -44,7 +47,12 @@ public:
                 current = current -> left;
             }
             else{
-                current = current -> right;
+                if(!current -> rightThread){
+                    current = current -> right;
+                }
+                else{
+                    break;
+                }
             }
         }
 
@@ -63,5 +71,108 @@ public:
         }
     }
 
+    //inorder display of the existing tree
+    void inorderTraversal(){
+        cout<<"The inorder traversal of the existing tree is...."<<endl;
+        Node *current = this -> root;
+        while(current -> left != nullptr){
+            current = current -> left;
+        }
 
+        while(true) {
+            cout<<current -> data<<" ";
+
+            //leaf node
+            if(current -> left == nullptr && current -> right == nullptr){
+                cout<<endl;
+                return;
+            }
+
+            //inorder successor present
+            if(current -> rightThread){
+                current = current -> right;
+            }
+
+            //right child is not present
+            else if(current -> right == nullptr){
+                return;
+            }
+
+            //smallest node in right subtree
+            else{
+                current = current -> right;
+                while(current -> left != nullptr){
+                    current = current -> left;
+                }
+            }
+        }
+    }
+
+    //preorder display of the existing tree
+    void preorderTraversal(){
+        cout<<"The preorder traversal of the existing tree is...."<<endl;
+        Node *current = this -> root;
+        while(true){
+            cout<<current -> data<<" ";
+
+            //left child present
+            if(current -> left){
+                current = current -> left;
+            }
+
+            //right child or inorder successor present
+            else if(current -> right){
+                while (current->rightThread)
+                {
+                    current = current -> right;
+                }
+                if (current -> right)
+                {
+                    current = current -> right;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            //max element node reached
+            else{
+                cout<<endl;
+                return;
+            }
+        }        
+    }
+
+    //inorder successor of a given node
+    Node *inorderSuccessor(Node *node){
+        //if thread is active return the right child
+        if(node -> rightThread){
+            return node -> right;
+        }
+        //else return the smallest node of right subtree
+        else{
+            node = node -> right;
+            while(node -> left != nullptr){
+                node = node -> left;
+            }
+            return node;
+        }
+    }
+
+    void deleteNode(int key){
+
+    }
 };
+
+int main(){
+    TBST t(25);
+    t.insert(12);
+    t.insert(4);
+    t.insert(35);
+    t.insert(67);
+    t.insert(43);
+    t.preorderTraversal();
+
+    return 0;
+}
