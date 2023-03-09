@@ -75,6 +75,8 @@ public:
     void inorderTraversal(){
         cout<<"The inorder traversal of the existing tree is...."<<endl;
         Node *current = this -> root;
+
+        //get the smallest node in tree i.e. leftmost
         while(current -> left != nullptr){
             current = current -> left;
         }
@@ -136,7 +138,7 @@ public:
                 }
             }
 
-            //max element node reached
+            //max element node reached and printed it
             else{
                 cout<<endl;
                 return;
@@ -159,7 +161,7 @@ public:
             return node;
         }
     }
-
+    
     void deleteNode(int key){
 
     }
