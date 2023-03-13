@@ -77,6 +77,8 @@ public:
         Node *current = this -> root;
 
         //get the smallest node in tree i.e. leftmost
+
+        //get the smallest node in tree i.e. leftmost
         while(current -> left != nullptr){
             current = current -> left;
         }
