@@ -28,8 +28,12 @@ public:
     }
 
     void print(){
-        cout<<this -> clientname<<" "<<phone<<endl;
-    }
+        cout<<clientname<<" "<<phone<<" "<<endl;
+    }  
+
+    bool isEmpty(){
+        return this -> phone == 0;
+    }  
 
     friend class HashingTable;
 };
@@ -37,6 +41,17 @@ public:
 class HashingTable{
     int tablesize;
     Record *record;
+
+    int hash(char clientname[]){
+        int ascii = 0;
+        char c = clientname[0];
+
+        for(int i=0;c!='\0';i++){
+            ascii = ascii + int(clientname[i]);
+            c = clientname[++i];
+        }
+        return ascii % tablesize;
+    }
 
 public:
     HashingTable(int i){
@@ -50,23 +65,23 @@ public:
         }
     }
 
-    void insert(Record r){
-        int ascii = 0;
-        char c = r.clientname[0];
-        for(int i=0;c!='\0';i++){
-            ascii = ascii + int(r.clientname[i]);
-            c = r.clientname[++i];
-        }
-        int index = ascii % tablesize;
-        if(record[index].phone == 0){
+    void insert_without_replacement(Record r){
+        int index = hash(r.clientname); 
+
+        if(record[index].isEmpty()){
             record[index] = r;
         }
         else{
-            while(!record[index].phone != 0){
-                index = (index + 1) % tablesize;
-            }
-            record[index] = r;
+            int currentIndex = index ;
+			while( !record[ currentIndex ].isEmpty() ) {
+				currentIndex = ( currentIndex + 1 ) % tablesize ;
+			}
+			record[ currentIndex ] = r ;
         }
+    }
+
+    void search(){
+
     }
 
     
@@ -74,9 +89,14 @@ public:
 
 int main(){
     HashingTable ht(10); 
-    ht.insert(Record("Advait" , 123454));
-    ht.insert(Record("abdbv" , 4687587));
-    ht.insert(Record("Krishna" , 7984));
+    int r;
+    char arr[20];
+    cout<<"Pls insert_without_replacement name and roll.."<<endl;
+    cin>>arr>>r;
+    ht.insert_without_replacement(Record(arr,r));
+    ht.insert_without_replacement(Record("advait" , 123454));
+    ht.insert_without_replacement(Record("abdbv" , 4687587));
+    ht.insert_without_replacement(Record("Krishna" , 7984));
     ht.display();
 
     return 0;
