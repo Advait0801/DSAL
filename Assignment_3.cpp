@@ -146,23 +146,7 @@ public:
                 return;
             }
         }        
-    }
-
-    //inorder successor of a given node
-    Node *inorderSuccessor(Node *node){
-        //if thread is active return the right child
-        if(node -> rightThread){
-            return node -> right;
-        }
-        //else return the smallest node of right subtree
-        else{
-            node = node -> right;
-            while(node -> left != nullptr){
-                node = node -> left;
-            }
-            return node;
-        }
-    }
+    }    
     
     void deleteNode(int key){
         Node *current = this -> root;
